@@ -1,0 +1,25 @@
+{
+    "name": "tms/supervision-bundle",
+    "type": "symfony-bundle",
+    "description": "TMS SupervisionBundle",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "TESSI MARKETING",
+            "email": "contact@tessi.fr",
+            "homepage": "http://www.tessi.fr"
+        }
+    ],
+    "repositories": [
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-0": {
+            "Tms\\Bundle\\SupervisionBundle": ""
+        }
+    },
+    "target-dir": "Tms/Bundle/SupervisionBundle",
+    "minimum-stability": "dev"
+}
