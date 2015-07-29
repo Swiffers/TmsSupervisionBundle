@@ -10,11 +10,12 @@ This bundle use the console component of Symfony and extended these commands:
 | 3      | check:memcache-connection | Check the connection of memcache          |
 | 4      | check:rabbitmq-connection | Check the default connection of rabbitmq  |
 
-principles
-----------
-1. Command 1 use the service ``doctrine`` of bundle ``DoctrineBundle``
+Database
+--------
+``check:doctrine:database-connection`` use the service ``doctrine`` of bundle ``DoctrineBundle``
 to check the connection between your application and **relational database** (such as MySQL, PostgreSQL or Microsoft SQL)
-this configuration in the app/config.yml will be used by this command:
+
+This configuration in the app/config.yml will be used by this command:
 ```
 # Doctrine Configuration
 doctrine:
@@ -30,9 +31,12 @@ doctrine:
                 charset:  UTF8
 ```
 
-2. Command 2 use the service ``doctrine_mongodb`` of bundle ``DoctrineMongoDBBundle``
+MongoDB
+-------
+``check:doctrine:mongodb-connection`` use the service ``doctrine_mongodb`` of bundle ``DoctrineMongoDBBundle``
 to check the connection between your application and **MongoDB**
-this configuration in the app/config.yml will be used by this command:
+
+This configuration in the app/config.yml will be used by this command:
 ```
 # Doctrine MongoDB Configuration
 doctrine_mongodb:
@@ -45,16 +49,22 @@ doctrine_mongodb:
             options: {}
 ```
 
-3. Command 3 use the function original ``Memcache`` of PHP
+Memcache
+-------
+``check:memcache-connection`` use the function original ``Memcache`` of PHP
 to check the connection between your application and **Memcached**
-this configuration in the app/parameters.yml will be used by this command:
+
+This configuration in the app/parameters.yml will be used by this command:
 ```
    memcache_servers: {memcached01: {host: localhost, port: 11211}}
 ```
 
-4. Command 4 use the service ``old_sound_rabbit_mq.connection.default`` of bundle ``oldsound/rabbitmq-bundle``
+RabbitMQ
+-------
+``check:rabbitmq-connection`` use the service ``old_sound_rabbit_mq.connection.default`` of bundle ``oldsound/rabbitmq-bundle``
 to check the connection between your application and **RabbitMQ**
-this configuration in the app/config.yml will be used by this command:
+
+This configuration in the app/config.yml will be used by this command:
 ```
 # RabbitMQ Configuration
 old_sound_rabbit_mq:

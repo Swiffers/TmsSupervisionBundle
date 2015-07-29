@@ -19,7 +19,7 @@ Add dependencies in your `composer.json` file:
 },    
 ```
 
-Install this new dependencie in your application using composer:
+Install these new dependencies in your application using composer:
 ```sh
 $ php composer.phar update
 ```
