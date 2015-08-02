@@ -1,5 +1,5 @@
-Usage
-=====
+Commands
+========
 
 This bundle use the console component of Symfony and extended these commands:
 
@@ -9,6 +9,9 @@ This bundle use the console component of Symfony and extended these commands:
 | 2      | check:doctrine:mongodb-connection  | Check the connection of MongoDB  |
 | 3      | check:memcache-connection | Check the connection of memcache          |
 | 4      | check:rabbitmq-connection | Check the default connection of rabbitmq  |
+
+Every command can be used independently, if the returned value is true, it means check process is passed.
+You can simply add your own command to this bundle by inherit the class ``AbstractCheckCommand``.
 
 Database
 --------

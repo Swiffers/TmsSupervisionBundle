@@ -35,8 +35,8 @@ function check($phpBin, $console, $checkPoint)
 // Test Symfony
 $checkResults[] = check($phpBin, $console, 'container:debug');
 
-if (0 == $checkResults[0]['status']) {
-    $checkResults[0]['message'] = 'ok!';
+if ('0' === $checkResults[0]['status']) {
+    $checkResults[0]['message'] = '[ok]';
     // Check Points
     foreach ($checkPoints as $checkPoint) {
         $result = check($phpBin, $console, $checkPoint);

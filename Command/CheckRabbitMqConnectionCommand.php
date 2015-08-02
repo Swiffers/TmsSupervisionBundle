@@ -8,42 +8,43 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class CheckRabbitMqConnectionCommand
- *
- * @package Tms\Bundle\SupervisionBundle\Command
  */
-class CheckRabbitMqConnectionCommand extends ContainerAwareCommand
+class CheckRabbitMqConnectionCommand extends AbstractCheckCommand
 {
     /**
      * {@inheritDoc}
      */
-    protected function configure()
+    public function getScopeName()
     {
-        $this
-            ->setName('check:rabbitmq-connection')
-            ->setDescription('Check the default connection of rabbitmq.');
+        return 'rabbitmq-connection';
     }
 
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function getDescription()
     {
+        return 'Check the default connection of rabbitmq.';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function check()
+    {
+        if (!$this->getContainer()->has('old_sound_rabbit_mq.connection.default')) {
+            return false;
+        }
+
         try {
             $connection = $this->getContainer()->get('old_sound_rabbit_mq.connection.default');
             $connection->reconnect();
         } catch (\Exception $e) {
-            $output->writeln($e->getMessage());
-
-            return 1;
+            return false;
         }
-
-        $output->writeln(sprintf(
-            '%s <info>default</info> connection ok!',
-            'rabbitmq'
-        ));
 
         $connection->close();
 
-        return 0;
+        return true;
     }
 }

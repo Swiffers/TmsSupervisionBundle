@@ -2,50 +2,50 @@
 
 namespace Tms\Bundle\SupervisionBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class CheckMemcacheConnectionCommand
- *
- * @package Tms\Bundle\SupervisionBundle\Command
  */
-class CheckMemcacheConnectionCommand extends ContainerAwareCommand
+class CheckMemcacheConnectionCommand extends AbstractCheckCommand
 {
     /**
      * {@inheritDoc}
      */
-    protected function configure()
+    public function getScopeName()
     {
-        $this
-            ->setName('check:memcache-connection')
-            ->setDescription('Check the connection of memcache.');
+        return 'memcache-connection';
     }
 
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function getDescription()
     {
+        return 'Check the connection of memcache.';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function check()
+    {
+        if (!$this->getContainer()->hasParameter('memcache_servers')) {
+            return false;
+        }
+
         $connections = $this->getContainer()->getParameter('memcache_servers');
 
         foreach ($connections as $key => $connection) {
             $memcache = new \Memcache();
             if (!$memcache->connect($connection['host'], $connection['port'])) {
-                return 1;
+                return false;
             }
-
-            $output->writeln(sprintf(
-                '<info>%s</info>://%s:%s connection ok!',
-                $key,
-                $connection['host'],
-                $connection['port']
-            ));
 
             $memcache->close();
         }
 
-        return 0;
+        return true;
     }
 }

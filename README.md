@@ -42,4 +42,4 @@ Documentation
 
 * [Introduction](Resources/doc/introduction.md)
 * [Commands](Resources/doc/commands.md)
-* [Usage](Resources/doc/usage.md)
+* [Usage](Resources/doc/check.md)

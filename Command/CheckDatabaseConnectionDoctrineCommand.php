@@ -2,54 +2,48 @@
 
 namespace Tms\Bundle\SupervisionBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
- * Class CheckDatabaseConnectionDoctrineCommand
- *
- * @package Tms\Bundle\SupervisionBundle\Command
+ * Class CheckDatabaseConnectionDoctrineCommand\
  */
-class CheckDatabaseConnectionDoctrineCommand extends ContainerAwareCommand
+class CheckDatabaseConnectionDoctrineCommand extends AbstractCheckCommand
 {
     /**
      * {@inheritDoc}
      */
-    protected function configure()
+    public function getScopeName()
     {
-        $this
-            ->setName('check:doctrine:database-connection')
-            ->setDescription('Check the connection of database.');
+        return 'doctrine:database-connection';
     }
 
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function getDescription()
     {
+        return 'Check the connection of database.';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function check()
+    {
+        if (!$this->getContainer()->has('doctrine')) {
+            return false;
+        }
+
         $connections = $this->getContainer()->get('doctrine')->getConnections();
 
         foreach ($connections as $key => $connection) {
             try {
                 $connection->connect();
             } catch (\Exception $e) {
-                $output->writeln($e->getMessage());
-
-                return 1;
+                return false;
             }
-            $params = $connection->getParams();
-            $output->writeln(sprintf(
-                '%s://%s:%s/<info>%s</info> connection ok!',
-                $params['driver'],
-                $params['host'],
-                $params['port'],
-                $params['dbname']
-            ));
 
             $connection->close();
         }
 
-        return 0;
+        return true;
     }
 }
